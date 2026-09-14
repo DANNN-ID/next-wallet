@@ -1,7 +1,7 @@
 import { User, Settings, Shield, HelpCircle, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { logout } from "./actions/auth";
+import { logout } from "@/app/actions/auth";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
