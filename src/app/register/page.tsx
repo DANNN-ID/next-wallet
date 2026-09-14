@@ -29,7 +29,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen p-6 bg-slate-50">
+    <div className="flex flex-col justify-center h-full min-h-[100dvh] p-6 bg-slate-50 -my-8">
       <div className="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full space-y-8">
         
         {/* Logo & Heading */}

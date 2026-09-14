@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   title: "Dompetku",
   description: "Aplikasi Keuangan Pribadi Mobile-First",
   manifest: "/manifest.ts",
+  robots: {
+    index: false,
+    follow: false,
+  },
   icons: {
     icon: "/favicon.png",
   }
