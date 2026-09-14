@@ -16,6 +16,18 @@ export async function addAccount(formData: FormData) {
     redirect("/login");
   }
 
+  // Cek apakah nama dompet sudah digunakan oleh user ini
+  const { data: existingAccount } = await supabase
+    .from("accounts")
+    .select("id")
+    .eq("user_id", user.id)
+    .ilike("name", name)
+    .single();
+
+  if (existingAccount) {
+    return { error: `Dompet dengan nama "${name}" sudah ada. Silakan gunakan nama lain.` };
+  }
+
   const { error } = await supabase
     .from("accounts")
     .insert({
