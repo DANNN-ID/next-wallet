@@ -1,4 +1,4 @@
-import { Wallet, Plus, CreditCard, ChevronRight } from "lucide-react";
+import { Wallet, Plus, CreditCard, ChevronRight, Edit2 } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -79,8 +79,11 @@ export default async function AccountsPage() {
                   <p className="text-xs text-slate-500">{account.type}</p>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="text-right flex flex-col justify-center items-end gap-1">
                 <p className="font-bold text-slate-900">{formatRupiah(getBalance(account.id))}</p>
+                <Link href={`/accounts/${account.id}/edit`} className="text-xs text-pink-500 font-medium flex items-center gap-1 hover:text-pink-600 p-1">
+                  <Edit2 className="w-3 h-3" /> Edit
+                </Link>
               </div>
             </div>
           ))
