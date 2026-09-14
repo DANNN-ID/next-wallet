@@ -1,5 +1,6 @@
 import { ArrowDownCircle, ArrowUpCircle, Plus, LogOut } from "lucide-react";
 import Link from "next/link";
+import TransactionItem from "@/components/TransactionItem";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { logout } from "./actions/auth";
@@ -159,22 +160,7 @@ export default async function Home() {
           {(!recentTrx || recentTrx.length === 0) ? (
             <div className="text-center py-8 text-slate-500 text-sm">Belum ada transaksi.</div>
           ) : recentTrx.map((trx: any) => (
-            <div key={trx.id} className="flex items-center justify-between p-4 rounded-2xl bg-white shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-xl">
-                  {trx.categories?.icon || '📝'}
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900 text-sm">{trx.description || trx.categories?.name || 'Transaksi'}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {trx.categories?.name || 'Tanpa kategori'} • {new Date(trx.transaction_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-                  </p>
-                </div>
-              </div>
-              <span className={`font-bold text-sm ${trx.type === 'INCOME' ? 'text-emerald-500' : 'text-slate-900'}`}>
-                {trx.type === 'INCOME' ? '+' : '-'}{formatRupiah(Number(trx.amount))}
-              </span>
-            </div>
+            <TransactionItem key={trx.id} trx={trx} />
           ))}
         </div>
       </div>

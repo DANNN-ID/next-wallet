@@ -1,4 +1,5 @@
 import { User, Settings, Shield, HelpCircle, LogOut } from "lucide-react";
+import TopBar from "@/components/TopBar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { logout } from "@/app/actions/auth";
@@ -20,9 +21,11 @@ export default async function ProfilePage() {
   const displayName = profile?.full_name || user.user_metadata?.full_name || 'Pengguna';
 
   return (
-    <div className="p-4 pt-10 pb-24 space-y-8">
+    <div className="pb-24 space-y-8">
+      <TopBar title="Profil Saya" />
+
       {/* Profile Header */}
-      <div className="flex flex-col items-center justify-center space-y-4 pt-4">
+      <div className="flex flex-col items-center justify-center space-y-4 pt-4 px-4">
         <div className="w-24 h-24 rounded-full bg-pink-100 flex items-center justify-center text-pink-500">
           <User className="w-12 h-12" />
         </div>
@@ -33,7 +36,7 @@ export default async function ProfilePage() {
       </div>
 
       {/* Info Aplikasi */}
-      <div className="space-y-4">
+      <div className="space-y-4 px-4">
         <h3 className="font-semibold text-slate-900 px-2">Info Aplikasi</h3>
         
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden p-4">
@@ -48,7 +51,7 @@ export default async function ProfilePage() {
       </div>
 
       {/* Logout */}
-      <form action={logout}>
+      <form action={logout} className="px-4">
         <button type="submit" className="w-full flex items-center justify-center gap-2 p-4 rounded-2xl bg-rose-50 text-rose-600 font-semibold hover:bg-rose-100 transition-colors">
           <LogOut className="w-5 h-5" />
           Keluar dari Akun

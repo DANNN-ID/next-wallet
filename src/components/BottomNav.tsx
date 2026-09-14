@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, PieChart, Wallet, User } from "lucide-react";
+import { Home, PieChart, Wallet, User, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ export default function BottomNav() {
     { name: "Beranda", href: "/", icon: Home },
     { name: "Transaksi", href: "/transactions", icon: PieChart },
     { name: "Dompet", href: "/accounts", icon: Wallet },
+    { name: "Analitik", href: "/analytics", icon: BarChart3 },
     { name: "Profil", href: "/profile", icon: User },
   ];
 

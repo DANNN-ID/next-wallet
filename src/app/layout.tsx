@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "Dompetku",
   description: "Aplikasi Keuangan Pribadi Mobile-First",
   manifest: "/manifest.ts",
+  icons: {
+    icon: "/favicon.png",
+  }
 };
 
 export default function RootLayout({

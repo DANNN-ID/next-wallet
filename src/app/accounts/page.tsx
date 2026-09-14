@@ -1,5 +1,6 @@
 import { Wallet, Plus, CreditCard, ChevronRight, Edit2 } from "lucide-react";
 import Link from "next/link";
+import TopBar from "@/components/TopBar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -53,20 +54,16 @@ export default async function AccountsPage() {
   const totalAllBalances = accounts?.reduce((acc, curr) => acc + getBalance(curr), 0) || 0;
 
   return (
-    <div className="p-4 pt-10 pb-24 space-y-6">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-slate-900">Dompet Anda</h1>
-        <p className="text-slate-500 text-sm">Kelola semua sumber dana Anda</p>
-      </header>
+    <div className="pb-24 space-y-6">
+      <TopBar title="Dompet Saya" />
 
       {/* Total Card */}
-      <div className="rounded-3xl bg-gradient-to-br from-pink-400 to-rose-500 p-6 text-white shadow-lg shadow-pink-500/30">
+      <div className="mx-4 rounded-3xl bg-gradient-to-br from-pink-400 to-rose-500 p-6 text-white shadow-lg shadow-pink-500/30">
         <p className="text-pink-50 text-sm mb-1">Total Saldo Semua Dompet</p>
         <h2 className="text-3xl font-bold">{formatRupiah(totalAllBalances)}</h2>
       </div>
 
-      {/* Accounts List */}
-      <div className="space-y-3">
+      <div className="space-y-3 px-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-slate-900">Daftar Dompet</h3>
         </div>

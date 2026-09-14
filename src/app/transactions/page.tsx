@@ -1,5 +1,7 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import TransactionItem from "@/components/TransactionItem";
+import TopBar from "@/components/TopBar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -34,33 +36,15 @@ export default async function TransactionsPage() {
   };
 
   return (
-    <div className="p-4 pt-10 pb-24 space-y-6">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-slate-900">Riwayat Transaksi</h1>
-        <p className="text-slate-500 text-sm">Semua catatan pemasukan dan pengeluaran Anda</p>
-      </header>
+    <div className="pb-24 space-y-6">
+      <TopBar title="Riwayat Transaksi" />
 
-      <div className="space-y-3">
+      <div className="space-y-3 px-4">
         {(!transactions || transactions.length === 0) ? (
           <div className="text-center py-12 text-slate-500 text-sm">Belum ada transaksi yang dicatat.</div>
         ) : (
           transactions.map((trx: any) => (
-            <div key={trx.id} className="flex items-center justify-between p-4 rounded-2xl bg-white shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-xl">
-                  {trx.categories?.icon || '📝'}
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900 text-sm">{trx.description || trx.categories?.name || 'Transaksi'}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {trx.accounts?.name} • {new Date(trx.transaction_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  </p>
-                </div>
-              </div>
-              <span className={`font-bold text-sm ${trx.type === 'INCOME' ? 'text-emerald-500' : 'text-slate-900'}`}>
-                {trx.type === 'INCOME' ? '+' : '-'}{formatRupiah(Number(trx.amount))}
-              </span>
-            </div>
+            <TransactionItem key={trx.id} trx={trx} />
           ))
         )}
       </div>
