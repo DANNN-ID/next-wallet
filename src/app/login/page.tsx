@@ -44,7 +44,9 @@ export default function LoginPage() {
           )}
           
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="email">Email</label>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="email">
+              Email <span className="text-red-500">*</span>
+            </label>
             <input 
               id="email" 
               name="email" 
@@ -56,7 +58,9 @@ export default function LoginPage() {
           </div>
           
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="password">Password</label>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="password">
+              Password <span className="text-red-500">*</span>
+            </label>
             <div className="relative">
               <input 
                 id="password" 

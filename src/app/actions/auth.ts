@@ -7,12 +7,15 @@ import { createClient } from '@/lib/supabase/server'
 export async function login(formData: FormData) {
   const supabase = await createClient()
   
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+  const rawEmail = formData.get('email') as string
+  const rawPassword = formData.get('password') as string
 
-  if (!email || !password) {
+  if (!rawEmail || !rawPassword) {
     return { error: 'Email dan password wajib diisi' }
   }
+
+  const email = rawEmail.trim().toLowerCase()
+  const password = rawPassword.trim()
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -30,37 +33,32 @@ export async function login(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = await createClient()
   
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+  const rawEmail = formData.get('email') as string
+  const rawPassword = formData.get('password') as string
   const fullName = formData.get('fullName') as string
 
-  if (!email || !password || !fullName) {
+  if (!rawEmail || !rawPassword || !fullName) {
     return { error: 'Semua field wajib diisi' }
   }
+
+  const email = rawEmail.trim().toLowerCase()
+  const password = rawPassword.trim()
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        full_name: fullName,
+      }
+    }
   })
 
   if (error) {
     return { error: error.message }
   }
 
-  // Insert into profiles
-  if (data.user) {
-    const { error: profileError } = await supabase.from('profiles').insert([
-      {
-        id: data.user.id,
-        full_name: fullName,
-        role: 'member',
-      }
-    ])
-    
-    if (profileError) {
-      return { error: profileError.message }
-    }
-  }
+  // Profil akan dibuat secara otomatis melalui Trigger di database Supabase
 
   revalidatePath('/', 'layout')
   redirect('/')

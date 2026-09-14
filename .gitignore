@@ -43,3 +43,4 @@ next-env.d.ts
 # docs
 notes.md
 database.sql
+trigger.sql
