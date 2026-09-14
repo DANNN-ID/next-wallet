@@ -135,18 +135,18 @@ export default async function Home() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4">
-        <Link href="/transactions/new?type=income" className="flex items-center gap-3 p-4 rounded-2xl bg-white shadow-sm active:scale-95 transition-transform">
-          <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-500">
-            <ArrowDownCircle className="w-6 h-6" />
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/transactions/new?type=income" className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-white shadow-sm active:scale-95 transition-transform text-center sm:text-left">
+          <div className="p-2 rounded-xl bg-emerald-50 text-emerald-500 shrink-0">
+            <ArrowDownCircle className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <span className="font-medium text-slate-700">Pemasukan</span>
+          <span className="font-semibold text-slate-700 text-[13px] sm:text-sm leading-tight">Pemasukan</span>
         </Link>
-        <Link href="/transactions/new?type=expense" className="flex items-center gap-3 p-4 rounded-2xl bg-white shadow-sm active:scale-95 transition-transform">
-          <div className="p-2.5 rounded-xl bg-rose-50 text-rose-500">
-            <ArrowUpCircle className="w-6 h-6" />
+        <Link href="/transactions/new?type=expense" className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-white shadow-sm active:scale-95 transition-transform text-center sm:text-left">
+          <div className="p-2 rounded-xl bg-rose-50 text-rose-500 shrink-0">
+            <ArrowUpCircle className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <span className="font-medium text-slate-700">Pengeluaran</span>
+          <span className="font-semibold text-slate-700 text-[13px] sm:text-sm leading-tight">Pengeluaran</span>
         </Link>
       </div>
 
