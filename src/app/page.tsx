@@ -1,4 +1,4 @@
-import { ArrowDownCircle, ArrowUpCircle, Plus, User } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Plus, LogOut } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -80,7 +80,7 @@ export default async function Home() {
         </div>
         <form action={logout}>
           <button type="submit" title="Keluar" className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 active:scale-95 transition-transform cursor-pointer border-none">
-            <User className="w-5 h-5" />
+            <LogOut className="w-5 h-5 ml-1" />
           </button>
         </form>
       </header>
