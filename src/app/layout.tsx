@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
+import SplashScreen from "@/components/SplashScreen";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased bg-slate-50 text-slate-900 min-h-screen`}
       >
+        <SplashScreen />
         <div className="mobile-container pb-16">
           <main className="flex-1 overflow-y-auto">
             {children}
