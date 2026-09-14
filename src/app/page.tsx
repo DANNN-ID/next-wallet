@@ -21,12 +21,31 @@ export default async function Home() {
     
   const displayName = profile?.full_name || user.user_metadata?.full_name || 'Pengguna';
 
-  // Fetch Total Balance from view
-  const { data: balances } = await supabase
-    .from('account_balances')
-    .select('current_balance')
+  // Fetch Accounts and their transactions to calculate accurate balances per user
+  const { data: accounts } = await supabase
+    .from('accounts')
+    .select(`
+      initial_balance,
+      transactions (
+        amount,
+        type
+      )
+    `)
+    .eq('user_id', user.id);
 
-  const totalBalance = balances?.reduce((acc, curr) => acc + Number(curr.current_balance), 0) || 0;
+  let totalBalance = 0;
+  if (accounts) {
+    accounts.forEach((acc: any) => {
+      let accBalance = Number(acc.initial_balance) || 0;
+      if (acc.transactions) {
+        acc.transactions.forEach((trx: any) => {
+          if (trx.type === 'INCOME') accBalance += Number(trx.amount);
+          if (trx.type === 'EXPENSE') accBalance -= Number(trx.amount);
+        });
+      }
+      totalBalance += accBalance;
+    });
+  }
 
   // Fetch Recent Transactions
   const { data: recentTrx } = await supabase

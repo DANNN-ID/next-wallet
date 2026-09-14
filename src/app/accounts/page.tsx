@@ -11,14 +11,18 @@ export default async function AccountsPage() {
     redirect('/login');
   }
 
-  // Fetch Accounts and their current balances
+  // Fetch Accounts and their transactions
   const { data: accounts, error } = await supabase
     .from('accounts')
     .select(`
       id,
       name,
       type,
-      initial_balance
+      initial_balance,
+      transactions (
+        amount,
+        type
+      )
     `)
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
@@ -26,14 +30,16 @@ export default async function AccountsPage() {
   if (error) {
     console.error("Accounts fetch error:", error);
   }
-  // or calculate them. Wait, the view `account_balances` has the actual total.
-  const { data: balances } = await supabase
-    .from('account_balances')
-    .select('account_id, current_balance');
 
-  const getBalance = (accountId: string) => {
-    const balanceObj = balances?.find(b => b.account_id === accountId);
-    return balanceObj ? Number(balanceObj.current_balance) : 0;
+  const getBalance = (account: any) => {
+    let bal = Number(account.initial_balance) || 0;
+    if (account.transactions) {
+      account.transactions.forEach((trx: any) => {
+        if (trx.type === 'INCOME') bal += Number(trx.amount);
+        if (trx.type === 'EXPENSE') bal -= Number(trx.amount);
+      });
+    }
+    return bal;
   };
 
   const formatRupiah = (angka: number) => {
@@ -44,7 +50,7 @@ export default async function AccountsPage() {
     }).format(angka);
   };
 
-  const totalAllBalances = accounts?.reduce((acc, curr) => acc + getBalance(curr.id), 0) || 0;
+  const totalAllBalances = accounts?.reduce((acc, curr) => acc + getBalance(curr), 0) || 0;
 
   return (
     <div className="p-4 pt-10 pb-24 space-y-6">
@@ -80,7 +86,7 @@ export default async function AccountsPage() {
                 </div>
               </div>
               <div className="text-right flex flex-col justify-center items-end gap-1">
-                <p className="font-bold text-slate-900">{formatRupiah(getBalance(account.id))}</p>
+                <p className="font-bold text-slate-900">{formatRupiah(getBalance(account))}</p>
                 <Link href={`/accounts/${account.id}/edit`} className="text-xs text-pink-500 font-medium flex items-center gap-1 hover:text-pink-600 p-1">
                   <Edit2 className="w-3 h-3" /> Edit
                 </Link>
