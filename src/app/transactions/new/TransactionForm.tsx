@@ -1,0 +1,137 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import { addTransaction } from "@/app/actions/transaction";
+import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+
+export default function TransactionForm({ accounts }: { accounts: any[] }) {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const [type, setType] = useState("EXPENSE"); // Default to Pengeluaran
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+    formData.append("type", type);
+    
+    startTransition(async () => {
+      try {
+        await addTransaction(formData);
+      } catch (err: any) {
+        setError(err.message || "Terjadi kesalahan saat menyimpan transaksi.");
+      }
+    });
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="space-y-6">
+      {error && (
+        <div className="p-3 text-sm text-rose-500 bg-rose-50 rounded-xl">
+          {error}
+        </div>
+      )}
+
+      {/* Type Toggle */}
+      <div className="flex p-1 bg-slate-100 rounded-2xl">
+        <button
+          type="button"
+          onClick={() => setType("EXPENSE")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-sm transition-all ${
+            type === "EXPENSE" 
+              ? "bg-white text-rose-500 shadow-sm" 
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          <ArrowUpCircle className="w-4 h-4" />
+          Pengeluaran
+        </button>
+        <button
+          type="button"
+          onClick={() => setType("INCOME")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-sm transition-all ${
+            type === "INCOME" 
+              ? "bg-white text-emerald-500 shadow-sm" 
+              : "text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          <ArrowDownCircle className="w-4 h-4" />
+          Pemasukan
+        </button>
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-slate-700" htmlFor="amount">
+          Nominal <span className="text-red-500">*</span>
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <span className="text-slate-500 font-medium">Rp</span>
+          </div>
+          <input 
+            id="amount" 
+            name="amount" 
+            type="number" 
+            min="1"
+            step="1"
+            required
+            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 placeholder-slate-400 text-lg font-semibold"
+            placeholder="0"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-slate-700" htmlFor="accountId">
+          Pilih Dompet <span className="text-red-500">*</span>
+        </label>
+        <select 
+          id="accountId" 
+          name="accountId" 
+          required
+          className="w-full px-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 appearance-none"
+        >
+          <option value="">Pilih sumber dana...</option>
+          {accounts.map(acc => (
+            <option key={acc.id} value={acc.id}>{acc.name} - Rp{Number(acc.initial_balance).toLocaleString('id-ID')}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-slate-700" htmlFor="date">
+          Tanggal Transaksi <span className="text-red-500">*</span>
+        </label>
+        <input 
+          id="date" 
+          name="date" 
+          type="date"
+          required
+          defaultValue={new Date().toISOString().split('T')[0]}
+          className="w-full px-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-slate-700" htmlFor="description">
+          Catatan / Deskripsi
+        </label>
+        <textarea 
+          id="description" 
+          name="description" 
+          rows={3}
+          className="w-full px-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 placeholder-slate-400 resize-none"
+          placeholder="Tulis catatan (opsional)"
+        ></textarea>
+      </div>
+
+      <button 
+        type="submit" 
+        disabled={isPending}
+        className="w-full py-3.5 px-4 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-medium rounded-xl shadow-lg shadow-pink-500/30 active:scale-[0.98] transition-all disabled:opacity-70 disabled:pointer-events-none mt-4"
+      >
+        {isPending ? 'Menyimpan...' : 'Simpan Transaksi'}
+      </button>
+    </form>
+  );
+}
