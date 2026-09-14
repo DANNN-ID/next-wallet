@@ -91,7 +91,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="p-4 pt-10 space-y-6">
+    <div className="p-4 space-y-6">
       {/* Header */}
       <header className="flex justify-between items-center">
         <div>

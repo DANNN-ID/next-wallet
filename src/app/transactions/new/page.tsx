@@ -21,7 +21,7 @@ export default async function NewTransactionPage() {
 
   if (!accounts || accounts.length === 0) {
     return (
-      <div className="flex flex-col min-h-screen bg-slate-50 p-4 pt-10">
+      <div className="flex flex-col min-h-screen bg-slate-50 p-4">
         <header className="flex items-center gap-4 mb-8">
           <Link href="/transactions" className="p-2 bg-white rounded-full shadow-sm text-slate-500 hover:text-pink-500 active:scale-95 transition-all">
             <ArrowLeft className="w-5 h-5" />
@@ -43,7 +43,7 @@ export default async function NewTransactionPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 p-4 pt-10 pb-24">
+    <div className="flex flex-col min-h-screen bg-slate-50 p-4 pb-24">
       <header className="flex items-center gap-4 mb-8">
         <Link href="/transactions" className="p-2 bg-white rounded-full shadow-sm text-slate-500 hover:text-pink-500 active:scale-95 transition-all">
           <ArrowLeft className="w-5 h-5" />
