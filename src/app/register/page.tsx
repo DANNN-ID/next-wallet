@@ -2,12 +2,13 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { Wallet } from 'lucide-react'
+import { Wallet, Eye, EyeOff } from 'lucide-react'
 import { signup } from '@/app/actions/auth'
 
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const [showPassword, setShowPassword] = useState(false)
 
   async function onSubmit(formData: FormData) {
     setError(null)
@@ -66,15 +67,25 @@ export default function RegisterPage() {
           
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="password">Password</label>
-            <input 
-              id="password" 
-              name="password" 
-              type="password"
-              required 
-              minLength={6}
-              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-none shadow-sm focus:ring-2 focus:ring-blue-600 outline-none text-slate-900 dark:text-white placeholder-slate-400"
-              placeholder="Minimal 6 karakter"
-            />
+            <div className="relative">
+              <input 
+                id="password" 
+                name="password" 
+                type={showPassword ? "text" : "password"}
+                required 
+                minLength={6}
+                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-none shadow-sm focus:ring-2 focus:ring-blue-600 outline-none text-slate-900 dark:text-white placeholder-slate-400 pr-12"
+                placeholder="Minimal 6 karakter"
+              />
+              <button 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
 
           <button 
