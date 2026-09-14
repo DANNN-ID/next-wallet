@@ -57,7 +57,8 @@ export default async function Home() {
       type,
       description,
       transaction_date,
-      categories (name, icon)
+      categories (id, name, icon, user_id),
+      accounts (name)
     `)
     .order('transaction_date', { ascending: false })
     .limit(5);

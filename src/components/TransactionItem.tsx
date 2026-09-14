@@ -77,14 +77,20 @@ export default function TransactionItem({ trx }: { trx: any }) {
                     {trx.accounts?.name || 'Tidak diketahui'}
                   </span>
                 </div>
-                {trx.categories?.name && (
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs font-medium text-slate-500">Kategori</span>
-                    <span className="text-sm font-semibold text-slate-900 text-right">
-                      {trx.categories.name}
+                <div className="flex justify-between items-start">
+                  <span className="text-xs font-medium text-slate-500 pt-0.5">Kategori</span>
+                  <div className="flex items-center gap-1.5 text-right">
+                    {trx.categories?.user_id && (
+                      <span className="text-[10px] bg-pink-100 text-pink-600 px-1.5 py-0.5 rounded font-semibold">Kustom</span>
+                    )}
+                    <span className="text-sm font-semibold text-slate-900">
+                      {trx.categories?.name || 'Tidak ada kategori'}
                     </span>
+                    {trx.categories?.icon && (
+                      <span className="text-base">{trx.categories.icon}</span>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
 
               <div className="bg-slate-50 p-4 rounded-2xl">

@@ -22,7 +22,7 @@ export default async function TransactionsPage() {
       type,
       description,
       transaction_date,
-      categories (name, icon),
+      categories (id, name, icon, user_id),
       accounts (name)
     `)
     .order('transaction_date', { ascending: false });
