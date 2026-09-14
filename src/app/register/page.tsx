@@ -4,8 +4,10 @@ import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { Wallet, Eye, EyeOff } from 'lucide-react'
 import { signup } from '@/app/actions/auth'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
   const [showPassword, setShowPassword] = useState(false)

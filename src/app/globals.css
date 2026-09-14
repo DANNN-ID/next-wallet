@@ -58,7 +58,6 @@ body {
   flex-direction: column;
 }
 
-}
 
 /* Pastikan semua elemen interaktif memiliki kursor pointer sesuai permintaan user */
 button:not(:disabled),
