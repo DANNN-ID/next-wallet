@@ -11,8 +11,13 @@ export async function addTransaction(formData: FormData) {
   const description = formData.get("description") as string;
   const date = formData.get("date") as string; // YYYY-MM-DD
   
+  const categoryId = formData.get("categoryId") as string;
+
   if (!accountId) {
     return { error: "Pilih dompet terlebih dahulu." };
+  }
+  if (!categoryId) {
+    return { error: "Pilih kategori terlebih dahulu." };
   }
   if (!amount || amount <= 0) {
     return { error: "Jumlah nominal tidak valid." };
@@ -32,9 +37,9 @@ export async function addTransaction(formData: FormData) {
       type,
       amount,
       account_id: accountId,
+      category_id: categoryId,
       description,
       transaction_date: date ? new Date(date).toISOString() : new Date().toISOString(),
-      // We will skip category_id for now if it's not implemented yet
     });
 
   if (error) {
