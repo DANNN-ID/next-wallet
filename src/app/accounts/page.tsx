@@ -45,38 +45,38 @@ export default async function AccountsPage() {
   return (
     <div className="p-4 pt-10 pb-24 space-y-6">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Dompet Anda</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">Kelola semua sumber dana Anda</p>
+        <h1 className="text-2xl font-bold text-slate-900">Dompet Anda</h1>
+        <p className="text-slate-500 text-sm">Kelola semua sumber dana Anda</p>
       </header>
 
       {/* Total Card */}
-      <div className="rounded-3xl bg-blue-600 p-6 text-white shadow-lg shadow-blue-500/30">
-        <p className="text-blue-100 text-sm mb-1">Total Saldo Semua Dompet</p>
+      <div className="rounded-3xl bg-gradient-to-br from-pink-400 to-rose-500 p-6 text-white shadow-lg shadow-pink-500/30">
+        <p className="text-pink-50 text-sm mb-1">Total Saldo Semua Dompet</p>
         <h2 className="text-3xl font-bold">{formatRupiah(totalAllBalances)}</h2>
       </div>
 
       {/* Accounts List */}
       <div className="space-y-3">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-slate-900 dark:text-white">Daftar Dompet</h3>
+          <h3 className="font-bold text-slate-900">Daftar Dompet</h3>
         </div>
 
         {(!accounts || accounts.length === 0) ? (
           <div className="text-center py-8 text-slate-500 text-sm">Belum ada dompet. Tambahkan dompet pertama Anda.</div>
         ) : (
           accounts.map(account => (
-            <div key={account.id} className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-900 shadow-sm active:scale-95 transition-transform cursor-pointer">
+            <div key={account.id} className="flex items-center justify-between p-4 rounded-2xl bg-white shadow-sm active:scale-95 transition-transform cursor-pointer">
               <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${account.type === 'CASH' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30' : account.type === 'BANK' ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' : 'bg-purple-100 text-purple-600 dark:bg-purple-900/30'}`}>
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${account.type === 'CASH' ? 'bg-emerald-50 text-emerald-500' : account.type === 'BANK' ? 'bg-pink-50 text-pink-500' : 'bg-purple-50 text-purple-500'}`}>
                   {account.type === 'CASH' ? <Wallet className="w-6 h-6" /> : <CreditCard className="w-6 h-6" />}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-900 dark:text-white">{account.name}</h4>
+                  <h4 className="font-semibold text-slate-900">{account.name}</h4>
                   <p className="text-xs text-slate-500">{account.type}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-bold text-slate-900 dark:text-white">{formatRupiah(getBalance(account.id))}</p>
+                <p className="font-bold text-slate-900">{formatRupiah(getBalance(account.id))}</p>
               </div>
             </div>
           ))
@@ -85,7 +85,7 @@ export default async function AccountsPage() {
 
       {/* Floating Action Button */}
       <div className="fixed bottom-20 right-4 max-w-[480px] w-full mx-auto pointer-events-none flex justify-end">
-        <Link href="/accounts/new" className="pointer-events-auto bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40 hover:bg-blue-700 active:scale-95 transition-all">
+        <Link href="/accounts/new" className="pointer-events-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-pink-500/40 hover:from-pink-600 hover:to-rose-600 active:scale-95 transition-all">
           <Plus className="w-6 h-6" />
         </Link>
       </div>

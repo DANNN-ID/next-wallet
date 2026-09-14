@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${inter.variable} antialiased h-full`}>
-      <body className="h-full bg-slate-100 dark:bg-slate-950">
+      <body
+        className={`${inter.variable} font-sans antialiased bg-slate-50 text-slate-900 min-h-screen`}
+      >
         <div className="mobile-container pb-16">
           <main className="flex-1 overflow-y-auto">
             {children}

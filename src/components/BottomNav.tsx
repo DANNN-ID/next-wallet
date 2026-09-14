@@ -1,8 +1,8 @@
 "use client";
 
+import { Home, PieChart, Wallet, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Wallet, PieChart, User } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function BottomNav() {
@@ -20,7 +20,7 @@ export default function BottomNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 w-full max-w-[480px] bg-white dark:bg-slate-900 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.2)] z-50">
+    <nav className="fixed bottom-0 w-full max-w-[480px] bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
       <div className="flex justify-around items-center h-16 px-2">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -29,24 +29,24 @@ export default function BottomNav() {
             <Link
               key={item.name}
               href={item.href}
-              className="relative flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-blue-600 transition-colors"
+              className="relative flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-pink-500 transition-colors"
             >
               {isActive && (
                 <motion.div
                   layoutId="bottom-nav-indicator"
-                  className="absolute top-0 w-8 h-1 bg-blue-600 rounded-b-full"
+                  className="absolute top-0 w-8 h-1 bg-gradient-to-r from-pink-400 to-rose-500 rounded-b-full"
                   initial={false}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
               <item.icon
                 className={`w-6 h-6 mb-1 ${
-                  isActive ? "text-blue-600 dark:text-blue-500" : "text-slate-400 dark:text-slate-500"
+                  isActive ? "text-pink-500" : "text-slate-400"
                 }`}
               />
               <span
                 className={`text-[10px] font-medium ${
-                  isActive ? "text-blue-600 dark:text-blue-500" : "text-slate-500 dark:text-slate-400"
+                  isActive ? "text-pink-500" : "text-slate-400"
                 }`}
               >
                 {item.name}
