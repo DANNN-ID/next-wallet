@@ -1,4 +1,4 @@
-import { ArrowDownCircle, ArrowUpCircle, Plus } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Plus, User } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -18,14 +18,13 @@ export default async function Home() {
     .select('full_name')
     .eq('id', user.id)
     .single();
+    
+  const displayName = profile?.full_name || user.user_metadata?.full_name || 'Pengguna';
 
   // Fetch Total Balance from view
   const { data: balances } = await supabase
     .from('account_balances')
     .select('current_balance')
-    // We would filter by user_id here but account_balances view might not have user_id. 
-    // Let's modify our query to join with accounts. 
-    // Actually RLS on accounts should naturally filter the view!
 
   const totalBalance = balances?.reduce((acc, curr) => acc + Number(curr.current_balance), 0) || 0;
 
@@ -71,19 +70,17 @@ export default async function Home() {
     }).format(angka);
   };
 
-  const getInitial = (name: string) => name ? name.charAt(0).toUpperCase() : 'U';
-
   return (
     <div className="p-4 pt-10 space-y-6">
       {/* Header */}
       <header className="flex justify-between items-center">
         <div>
           <p className="text-sm text-slate-500 dark:text-slate-400">Selamat datang kembali,</p>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">{profile?.full_name || 'Pengguna'}</h1>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white">{displayName}</h1>
         </div>
         <form action={logout}>
-          <button type="submit" title="Keluar" className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold active:scale-95 transition-transform cursor-pointer border-none">
-            {getInitial(profile?.full_name || '')}
+          <button type="submit" title="Keluar" className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 active:scale-95 transition-transform cursor-pointer border-none">
+            <User className="w-5 h-5" />
           </button>
         </form>
       </header>
