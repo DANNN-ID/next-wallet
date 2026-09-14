@@ -3,6 +3,8 @@
 import { ArrowLeft, Wallet, CreditCard, Banknote } from "lucide-react";
 import Link from "next/link";
 import { updateAccount } from "@/app/actions/account";
+import TopBar from "@/components/TopBar";
+import CurrencyInput from "@/components/CurrencyInput";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -31,15 +33,10 @@ export default function EditAccountForm({ account }: { account: any }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 p-4">
-      <header className="flex items-center gap-4 mb-8">
-        <Link href="/accounts" className="p-2 bg-white rounded-full shadow-sm text-slate-500 hover:text-pink-500 active:scale-95 transition-all">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <h1 className="text-xl font-bold text-slate-900">Edit Dompet</h1>
-      </header>
+    <div className="flex flex-col min-h-screen bg-slate-50 pb-24">
+      <TopBar title="Edit Dompet" />
 
-      <form onSubmit={onSubmit} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6 px-4">
         {error && (
           <div className="p-3 text-sm text-rose-500 bg-rose-50 rounded-xl">
             {error}
@@ -98,16 +95,7 @@ export default function EditAccountForm({ account }: { account: any }) {
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <span className="text-slate-500 font-medium">Rp</span>
             </div>
-            <input 
-              id="initialBalance" 
-              name="initialBalance" 
-              type="number" 
-              min="0"
-              step="1"
-              defaultValue={account.initial_balance}
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 placeholder-slate-400"
-              placeholder="0"
-            />
+            <CurrencyInput name="initial_balance" defaultValue={account.initial_balance} placeholder="0" />
           </div>
           <p className="text-xs text-slate-500">Ubah ini hanya jika Anda salah memasukkan saldo awal saat dompet dibuat.</p>
         </div>

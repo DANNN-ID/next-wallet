@@ -1,8 +1,8 @@
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import TransactionForm from "./TransactionForm";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import TopBar from "@/components/TopBar";
 
 export default async function NewTransactionPage() {
   const supabase = await createClient();
@@ -19,17 +19,18 @@ export default async function NewTransactionPage() {
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
+  // Fetch categories (RLS will automatically filter global + own categories based on the policy we just set)
+  const { data: categories } = await supabase
+    .from("categories")
+    .select("*")
+    .order("name", { ascending: true });
+
   if (!accounts || accounts.length === 0) {
     return (
-      <div className="flex flex-col min-h-screen bg-slate-50 p-4">
-        <header className="flex items-center gap-4 mb-8">
-          <Link href="/transactions" className="p-2 bg-white rounded-full shadow-sm text-slate-500 hover:text-pink-500 active:scale-95 transition-all">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <h1 className="text-xl font-bold text-slate-900">Catat Transaksi</h1>
-        </header>
+      <div className="flex flex-col min-h-screen bg-slate-50 pb-24">
+        <TopBar title="Catat Transaksi" />
 
-        <div className="bg-white p-6 rounded-2xl shadow-sm text-center space-y-4">
+        <div className="bg-white p-6 rounded-2xl shadow-sm text-center space-y-4 mx-4">
           <h2 className="font-semibold text-slate-900">Anda belum memiliki dompet</h2>
           <p className="text-slate-500 text-sm">
             Untuk mencatat transaksi, Anda perlu menambahkan setidaknya satu dompet atau sumber dana terlebih dahulu.
@@ -43,15 +44,12 @@ export default async function NewTransactionPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 p-4 pb-24">
-      <header className="flex items-center gap-4 mb-8">
-        <Link href="/transactions" className="p-2 bg-white rounded-full shadow-sm text-slate-500 hover:text-pink-500 active:scale-95 transition-all">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <h1 className="text-xl font-bold text-slate-900">Catat Transaksi</h1>
-      </header>
+    <div className="flex flex-col min-h-screen bg-slate-50 pb-24">
+      <TopBar title="Catat Transaksi" />
 
-      <TransactionForm accounts={accounts} />
+      <div className="px-4">
+        <TransactionForm accounts={accounts} categories={categories || []} />
+      </div>
     </div>
   );
 }

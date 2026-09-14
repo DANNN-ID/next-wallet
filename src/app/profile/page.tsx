@@ -1,5 +1,6 @@
-import { User, Settings, Shield, HelpCircle, LogOut } from "lucide-react";
+import { User, Settings, Shield, HelpCircle, LogOut, FolderTree, ChevronRight } from "lucide-react";
 import TopBar from "@/components/TopBar";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { logout } from "@/app/actions/auth";
@@ -37,7 +38,19 @@ export default async function ProfilePage() {
 
       {/* Info Aplikasi */}
       <div className="space-y-4 px-4">
-        <h3 className="font-semibold text-slate-900 px-2">Info Aplikasi</h3>
+        <h3 className="font-semibold text-slate-900 px-2">Pengaturan</h3>
+        
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden p-2">
+          <Link href="/categories" className="flex items-center justify-between p-3 hover:bg-slate-50 transition-colors rounded-xl">
+            <div className="flex items-center gap-3 text-slate-700">
+              <FolderTree className="w-5 h-5 text-pink-500" />
+              <p className="font-medium">Manajemen Kategori Kustom</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-slate-400" />
+          </Link>
+        </div>
+
+        <h3 className="font-semibold text-slate-900 px-2 mt-6">Info Aplikasi</h3>
         
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden p-4">
           <div className="flex items-center gap-3 text-slate-700">

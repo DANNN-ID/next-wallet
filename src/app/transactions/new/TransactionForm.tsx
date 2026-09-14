@@ -2,14 +2,37 @@
 
 import { useState, useTransition } from "react";
 import { addTransaction } from "@/app/actions/transaction";
-import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Wallet, CreditCard, Banknote } from "lucide-react";
 import { useRouter } from "next/navigation";
+import CurrencyInput from "@/components/CurrencyInput";
+import CustomSelect, { Option } from "@/components/CustomSelect";
 
-export default function TransactionForm({ accounts }: { accounts: any[] }) {
+export default function TransactionForm({ accounts, categories }: { accounts: any[], categories: any[] }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [type, setType] = useState("EXPENSE"); // Default to Pengeluaran
+
+  const accountOptions: Option[] = accounts.map(acc => {
+    let Icon = Wallet;
+    if (acc.type === 'BANK') Icon = CreditCard;
+    if (acc.type === 'CASH') Icon = Banknote;
+    
+    return {
+      value: acc.id,
+      label: acc.name,
+      description: `Rp ${Number(acc.initial_balance).toLocaleString('id-ID')}`,
+      icon: <Icon className="w-5 h-5 text-slate-500" />
+    };
+  });
+
+  const categoryOptions: Option[] = categories
+    .filter(cat => cat.type === type)
+    .map(cat => ({
+      value: cat.id,
+      label: cat.name,
+      icon: <span className="text-xl">{cat.icon}</span>
+    }));
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,34 +98,32 @@ export default function TransactionForm({ accounts }: { accounts: any[] }) {
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <span className="text-slate-500 font-medium">Rp</span>
           </div>
-          <input 
-            id="amount" 
-            name="amount" 
-            type="number" 
-            min="1"
-            step="1"
-            required
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 placeholder-slate-400 text-lg font-semibold"
-            placeholder="0"
-          />
+          <CurrencyInput name="amount" placeholder="0" />
         </div>
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 z-40 relative">
         <label className="text-sm font-medium text-slate-700" htmlFor="accountId">
           Pilih Dompet <span className="text-red-500">*</span>
         </label>
-        <select 
-          id="accountId" 
-          name="accountId" 
+        <CustomSelect 
+          name="accountId"
+          options={accountOptions}
+          placeholder="Pilih sumber dana..."
           required
-          className="w-full px-4 py-3 rounded-xl bg-white border-none shadow-sm focus:ring-2 focus:ring-pink-500 outline-none text-slate-900 appearance-none"
-        >
-          <option value="">Pilih sumber dana...</option>
-          {accounts.map(acc => (
-            <option key={acc.id} value={acc.id}>{acc.name} - Rp{Number(acc.initial_balance).toLocaleString('id-ID')}</option>
-          ))}
-        </select>
+        />
+      </div>
+
+      <div className="space-y-1.5 z-30 relative">
+        <label className="text-sm font-medium text-slate-700" htmlFor="categoryId">
+          Kategori <span className="text-red-500">*</span>
+        </label>
+        <CustomSelect 
+          name="categoryId"
+          options={categoryOptions}
+          placeholder="Pilih kategori..."
+          required
+        />
       </div>
 
       <div className="space-y-1.5">
