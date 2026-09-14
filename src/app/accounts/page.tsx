@@ -12,16 +12,20 @@ export default async function AccountsPage() {
   }
 
   // Fetch Accounts and their current balances
-  const { data: accounts } = await supabase
+  const { data: accounts, error } = await supabase
     .from('accounts')
     .select(`
       id,
       name,
       type,
-      balance
-    `);
-
-  // We should also fetch the calculated balances from the view, 
+      initial_balance
+    `)
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+    
+  if (error) {
+    console.error("Accounts fetch error:", error);
+  }
   // or calculate them. Wait, the view `account_balances` has the actual total.
   const { data: balances } = await supabase
     .from('account_balances')

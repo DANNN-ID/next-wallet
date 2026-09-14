@@ -15,9 +15,15 @@ export default function LoginPage() {
   async function onSubmit(formData: FormData) {
     setError(null)
     startTransition(async () => {
-      const result = await login(formData)
-      if (result?.error) {
-        setError(result.error)
+      try {
+        const result = await login(formData)
+        if (result?.error) {
+          setError(result.error)
+        } else if (result?.success) {
+          router.push('/')
+        }
+      } catch (err: any) {
+        setError(err.message || "Terjadi kesalahan.")
       }
     })
   }

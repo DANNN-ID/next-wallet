@@ -27,13 +27,10 @@ export async function addAccount(formData: FormData) {
 
   if (error) {
     console.error("Add account error:", error);
-    // Ideally we would return the error, but for simplicity we'll just redirect back on success
-    // or handle error state via useActionState. Since we are server-side only here without client,
-    // we just redirect. If it fails it will throw.
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
   revalidatePath("/");
   revalidatePath("/accounts");
-  redirect("/accounts");
+  return { success: true };
 }

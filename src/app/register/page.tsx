@@ -13,9 +13,15 @@ export default function RegisterPage() {
   async function onSubmit(formData: FormData) {
     setError(null)
     startTransition(async () => {
-      const result = await signup(formData)
-      if (result?.error) {
-        setError(result.error)
+      try {
+        const result = await signup(formData)
+        if (result?.error) {
+          setError(result.error)
+        } else if (result?.success) {
+          router.push('/')
+        }
+      } catch (err: any) {
+        setError(err.message || "Terjadi kesalahan.")
       }
     })
   }

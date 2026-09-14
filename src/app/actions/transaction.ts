@@ -12,10 +12,10 @@ export async function addTransaction(formData: FormData) {
   const date = formData.get("date") as string; // YYYY-MM-DD
   
   if (!accountId) {
-    throw new Error("Pilih dompet terlebih dahulu.");
+    return { error: "Pilih dompet terlebih dahulu." };
   }
   if (!amount || amount <= 0) {
-    throw new Error("Jumlah nominal tidak valid.");
+    return { error: "Jumlah nominal tidak valid." };
   }
 
   const supabase = await createClient();
@@ -39,11 +39,11 @@ export async function addTransaction(formData: FormData) {
 
   if (error) {
     console.error("Add transaction error:", error);
-    throw new Error(error.message);
+    return { error: error.message };
   }
 
   revalidatePath("/");
   revalidatePath("/transactions");
   revalidatePath("/accounts");
-  redirect("/transactions");
+  return { success: true };
 }

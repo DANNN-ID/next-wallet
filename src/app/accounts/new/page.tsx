@@ -4,8 +4,10 @@ import { ArrowLeft, Wallet, CreditCard, Banknote } from "lucide-react";
 import Link from "next/link";
 import { addAccount } from "@/app/actions/account";
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NewAccountPage() {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -16,7 +18,12 @@ export default function NewAccountPage() {
     
     startTransition(async () => {
       try {
-        await addAccount(formData);
+        const res = await addAccount(formData);
+        if (res?.error) {
+          setError(res.error);
+        } else if (res?.success) {
+          router.push("/accounts");
+        }
       } catch (err: any) {
         setError(err.message || "Terjadi kesalahan saat menambahkan dompet.");
       }

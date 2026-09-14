@@ -3,8 +3,10 @@
 import { useState, useTransition } from "react";
 import { addTransaction } from "@/app/actions/transaction";
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function TransactionForm({ accounts }: { accounts: any[] }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [type, setType] = useState("EXPENSE"); // Default to Pengeluaran
@@ -17,7 +19,12 @@ export default function TransactionForm({ accounts }: { accounts: any[] }) {
     
     startTransition(async () => {
       try {
-        await addTransaction(formData);
+        const res = await addTransaction(formData);
+        if (res?.error) {
+          setError(res.error);
+        } else if (res?.success) {
+          router.push("/transactions");
+        }
       } catch (err: any) {
         setError(err.message || "Terjadi kesalahan saat menyimpan transaksi.");
       }
