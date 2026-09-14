@@ -2,7 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import EditAccountForm from "./EditAccountForm";
 
-export default async function EditAccountPage({ params }: { params: { id: string } }) {
+export default async function EditAccountPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -13,7 +14,7 @@ export default async function EditAccountPage({ params }: { params: { id: string
   const { data: account } = await supabase
     .from("accounts")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", id)
     .eq("user_id", user.id)
     .single();
 
