@@ -49,8 +49,8 @@ export default function LoginPage() {
             </div>
           )}
           
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="email">
+          <div className="space-y-2.5">
+            <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="email">
               Email <span className="text-red-500">*</span>
             </label>
             <input 
@@ -63,8 +63,8 @@ export default function LoginPage() {
             />
           </div>
           
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="password">
+          <div className="space-y-2.5">
+            <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="password">
               Password <span className="text-red-500">*</span>
             </label>
             <div className="relative">

@@ -43,8 +43,8 @@ export default function EditAccountForm({ account }: { account: any }) {
           </div>
         )}
 
-        <div className="space-y-1.5">
-          <label className="text-sm font-medium text-slate-700" htmlFor="name">
+        <div className="space-y-2.5">
+          <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="name">
             Nama Dompet <span className="text-red-500">*</span>
           </label>
           <input 
@@ -58,8 +58,8 @@ export default function EditAccountForm({ account }: { account: any }) {
           />
         </div>
 
-        <div className="space-y-1.5">
-          <label className="text-sm font-medium text-slate-700" htmlFor="type">
+        <div className="space-y-2.5">
+          <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="type">
             Jenis Dompet <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-3 gap-3">
@@ -87,8 +87,8 @@ export default function EditAccountForm({ account }: { account: any }) {
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <label className="text-sm font-medium text-slate-700" htmlFor="initialBalance">
+        <div className="space-y-2.5">
+          <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="initialBalance">
             Saldo Awal
           </label>
           <div className="relative">

@@ -78,7 +78,7 @@ export default async function CategoriesPage() {
       </div>
 
       {/* Floating Action Button */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 max-w-[480px] w-full px-4 pointer-events-none flex justify-end z-40">
+      <div className="fixed bottom-24 left-1/2 -translate-x-1/2 max-w-[480px] w-full px-4 pointer-events-none flex justify-end z-40">
         <Link href="/categories/new" className="pointer-events-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-pink-500/40 hover:from-pink-600 hover:to-rose-600 active:scale-95 transition-all">
           <Plus className="w-6 h-6" />
         </Link>

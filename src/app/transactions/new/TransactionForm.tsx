@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { addTransaction } from "@/app/actions/transaction";
 import { ArrowDownCircle, ArrowUpCircle, Wallet, CreditCard, Banknote } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import CurrencyInput from "@/components/CurrencyInput";
 import CustomSelect, { Option } from "@/components/CustomSelect";
 
@@ -90,8 +91,8 @@ export default function TransactionForm({ accounts, categories }: { accounts: an
         </button>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-sm font-medium text-slate-700" htmlFor="amount">
+      <div className="space-y-2.5">
+        <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="amount">
           Nominal <span className="text-red-500">*</span>
         </label>
         <div className="relative">
@@ -102,8 +103,8 @@ export default function TransactionForm({ accounts, categories }: { accounts: an
         </div>
       </div>
 
-      <div className="space-y-1.5 z-40 relative">
-        <label className="text-sm font-medium text-slate-700" htmlFor="accountId">
+      <div className="space-y-2.5 z-40 relative">
+        <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="accountId">
           Pilih Dompet <span className="text-red-500">*</span>
         </label>
         <CustomSelect 
@@ -114,10 +115,15 @@ export default function TransactionForm({ accounts, categories }: { accounts: an
         />
       </div>
 
-      <div className="space-y-1.5 z-30 relative">
-        <label className="text-sm font-medium text-slate-700" htmlFor="categoryId">
-          Kategori <span className="text-red-500">*</span>
-        </label>
+      <div className="space-y-2.5 z-30 relative">
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-slate-700" htmlFor="categoryId">
+            Kategori <span className="text-red-500">*</span>
+          </label>
+          <Link href="/categories/new" className="text-xs font-semibold text-pink-500 hover:text-pink-600 bg-pink-50 hover:bg-pink-100 px-2.5 py-1 rounded-lg transition-colors">
+            + Tambah
+          </Link>
+        </div>
         <CustomSelect 
           name="categoryId"
           options={categoryOptions}
@@ -126,8 +132,8 @@ export default function TransactionForm({ accounts, categories }: { accounts: an
         />
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-sm font-medium text-slate-700" htmlFor="date">
+      <div className="space-y-2.5">
+        <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="date">
           Tanggal Transaksi <span className="text-red-500">*</span>
         </label>
         <input 
@@ -140,8 +146,8 @@ export default function TransactionForm({ accounts, categories }: { accounts: an
         />
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-sm font-medium text-slate-700" htmlFor="description">
+      <div className="space-y-2.5">
+        <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="description">
           Catatan / Deskripsi
         </label>
         <textarea 

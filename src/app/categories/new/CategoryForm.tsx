@@ -71,8 +71,8 @@ export default function CategoryForm() {
         </button>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-sm font-medium text-slate-700" htmlFor="name">
+      <div className="space-y-2.5">
+        <label className="block mb-2 text-sm font-medium text-slate-700" htmlFor="name">
           Nama Kategori <span className="text-red-500">*</span>
         </label>
         <input 
@@ -86,8 +86,8 @@ export default function CategoryForm() {
         />
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-700">
+      <div className="space-y-2.5">
+        <label className="block mb-2 text-sm font-medium text-slate-700">
           Pilih Ikon <span className="text-red-500">*</span>
         </label>
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
@@ -96,7 +96,7 @@ export default function CategoryForm() {
               key={emoji}
               type="button"
               onClick={() => setSelectedIcon(emoji)}
-              className={`text-2xl p-2 rounded-xl transition-all ${selectedIcon === emoji ? 'bg-pink-100 scale-110 shadow-sm border border-pink-200' : 'bg-white hover:bg-slate-50'}`}
+              className={`aspect-square flex items-center justify-center text-2xl rounded-xl transition-all ${selectedIcon === emoji ? 'bg-pink-100 scale-110 shadow-sm border border-pink-200' : 'bg-white hover:bg-slate-50 border border-transparent'}`}
             >
               {emoji}
             </button>

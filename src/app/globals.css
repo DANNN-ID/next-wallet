@@ -58,4 +58,17 @@ body {
   flex-direction: column;
 }
 
+}
 
+/* Pastikan semua elemen interaktif memiliki kursor pointer sesuai permintaan user */
+button:not(:disabled),
+a,
+[role="button"]:not(:disabled),
+label,
+select:not(:disabled),
+input[type="submit"]:not(:disabled),
+input[type="button"]:not(:disabled),
+input[type="radio"]:not(:disabled),
+input[type="checkbox"]:not(:disabled) {
+  cursor: pointer;
+}
